@@ -155,3 +155,10 @@ Required
 
 Maximum:
 30 characters
+
+## Resolution Note
+
+Optional
+
+Maximum:
+1000 characters

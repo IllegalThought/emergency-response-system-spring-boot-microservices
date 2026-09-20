@@ -34,8 +34,31 @@ Values:
 - GUARD
 - ADMIN
 
+## RefreshToken
+
+Fields:
+
+- id : UUID
+- userId : UUID
+- tokenHash : String
+- expiresAt : Instant
+- revokedAt : Instant
+- createdAt : Instant
+
 
 # Incident Domain
+
+## IssueStatusHistory
+
+Fields:
+
+- id : UUID
+- issueId : UUID
+- previousStatus : IssueStatus
+- newStatus : IssueStatus
+- changedByUserId : UUID
+- changedAt : Instant
+- note : String
 
 ## CampusIssue
 
@@ -93,6 +116,28 @@ Values:
 
 # Emergency Domain
 
+## SosAssignment
+
+Fields:
+
+- id : UUID
+- sosId : UUID
+- guardId : UUID
+- status : AssignmentStatus
+- distanceMeters : BigDecimal
+- offeredAt : Instant
+- respondedAt : Instant
+
+
+## AssignmentStatus
+
+Values:
+
+- PENDING
+- ACCEPTED
+- REJECTED
+- EXPIRED
+- CANCELLED
 ## Guard
 
 Fields:
@@ -134,6 +179,7 @@ Fields:
 - respondingAt : Instant
 - resolvedAt : Instant
 - cancelledAt : Instant
+- resolutionNote : String
 
 
 ## SosStatus

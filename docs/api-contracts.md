@@ -165,7 +165,25 @@ Request:
   "longitude": 73.8567
 }
 # SOS APIs
+## Reject SOS Assignment
 
+POST /api/sos/{sosId}/reject
+
+GUARD only.
+
+The guard rejecting the assignment must be the currently assigned guard.
+
+Behaviour:
+
+Guard:
+
+RESERVED -> AVAILABLE
+
+SOS:
+
+GUARD_ASSIGNED -> SEARCHING_FOR_GUARD
+
+The system then searches for the next available guard.
 
 ## Create SOS
 
@@ -280,3 +298,33 @@ POST /api/admin/parking/simulator/start
 ## Stop Simulator
 
 POST /api/admin/parking/simulator/stop
+
+
+ADMIN USER MANAGEMENT
+
+GET    /api/admin/users
+GET    /api/admin/users/{userId}
+PATCH  /api/admin/users/{userId}/status
+
+
+ADMIN GUARD MANAGEMENT
+
+POST   /api/admin/guards
+GET    /api/admin/guards
+GET    /api/admin/guards/{guardId}
+PATCH  /api/admin/guards/{guardId}
+
+
+GUARD EMERGENCY
+
+GET    /api/guards/me/sos
+POST   /api/sos/{sosId}/reject
+
+
+PARKING ADMIN
+
+POST   /api/admin/parking/zones
+PATCH  /api/admin/parking/zones/{zoneId}
+
+POST   /api/admin/parking/zones/{zoneId}/slots
+PATCH  /api/parking/slots/{slotId}/status
