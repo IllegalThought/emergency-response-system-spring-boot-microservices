@@ -1,0 +1,49 @@
+# macOS
+.DS_Store
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VS Code
+.vscode/
+
+# Java
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven
+.mvn/timing.properties
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Node
+node_modules/
+.next/
+out/
+dist/
+
+# Coverage
+coverage/
+
+# Docker volumes
+docker-data/
+
+# Temporary
+tmp/
+temp/
+
+# OS files
+Thumbs.db
