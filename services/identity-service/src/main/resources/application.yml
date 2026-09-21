@@ -17,17 +17,29 @@ spring:
     open-in-view: false
 
     properties:
-      "[hibernate.jdbc.time_zone]": UTC
+      "hibernate.jdbc.time_zone": UTC
 
   flyway:
     enabled: true
     locations: classpath:db/migration
 
+
+# JWT configuration
+security:
+  jwt:
+    issuer: campus-naksha-identity
+    access-token-ttl: PT15M
+    secret: ${JWT_SECRET:Y2FtcHVzLW5ha3NoYS1kZXYtc2VjcmV0LWtleS0zMmJ5dGVzIQ==}
+
+
+# Eureka configuration
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
+
+# Actuator configuration
 management:
   endpoints:
     web:

@@ -65,4 +65,63 @@ public class GlobalExceptionHandler {
                 .badRequest()
                 .body(error);
     }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+public ResponseEntity<ApiError> handleInvalidCredentials(
+        InvalidCredentialsException exception,
+        HttpServletRequest request
+) {
+
+    ApiError error = new ApiError(
+            Instant.now(),
+            HttpStatus.UNAUTHORIZED.value(),
+            "INVALID_CREDENTIALS",
+            exception.getMessage(),
+            request.getRequestURI(),
+            Map.of()
+    );
+
+    return ResponseEntity
+            .status(HttpStatus.UNAUTHORIZED)
+            .body(error);
+}
+
+@ExceptionHandler(AccountDisabledException.class)
+public ResponseEntity<ApiError> handleAccountDisabled(
+        AccountDisabledException exception,
+        HttpServletRequest request
+) {
+
+    ApiError error = new ApiError(
+            Instant.now(),
+            HttpStatus.FORBIDDEN.value(),
+            "ACCOUNT_DISABLED",
+            exception.getMessage(),
+            request.getRequestURI(),
+            Map.of()
+    );
+
+    return ResponseEntity
+            .status(HttpStatus.FORBIDDEN)
+            .body(error);
+}
+@ExceptionHandler(UserNotFoundException.class)
+public ResponseEntity<ApiError> handleUserNotFound(
+        UserNotFoundException exception,
+        HttpServletRequest request
+) {
+
+    ApiError error = new ApiError(
+            Instant.now(),
+            HttpStatus.NOT_FOUND.value(),
+            "USER_NOT_FOUND",
+            exception.getMessage(),
+            request.getRequestURI(),
+            Map.of()
+    );
+
+    return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(error);
+}
 }
