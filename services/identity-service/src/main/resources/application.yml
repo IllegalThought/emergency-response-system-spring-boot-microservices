@@ -29,8 +29,8 @@ security:
   jwt:
     issuer: campus-naksha-identity
     access-token-ttl: PT15M
+    refresh-token-ttl: P7D
     secret: ${JWT_SECRET:Y2FtcHVzLW5ha3NoYS1kZXYtc2VjcmV0LWtleS0zMmJ5dGVzIQ==}
-
 
 # Eureka configuration
 eureka:

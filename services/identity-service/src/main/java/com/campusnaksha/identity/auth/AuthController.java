@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.campusnaksha.identity.auth.dto.LoginRequest;
 import com.campusnaksha.identity.auth.dto.LoginResponse;
+import com.campusnaksha.identity.auth.dto.LogoutRequest;
+import com.campusnaksha.identity.auth.dto.RefreshTokenRequest;
 import com.campusnaksha.identity.auth.dto.RegisterRequest;
 import com.campusnaksha.identity.auth.dto.UserResponse;
 
@@ -43,5 +45,25 @@ public ResponseEntity<LoginResponse> login(
     return ResponseEntity.ok(
             authService.login(request)
     );
+}
+@PostMapping("/refresh")
+public ResponseEntity<LoginResponse> refresh(
+        @Valid @RequestBody RefreshTokenRequest request
+) {
+
+    return ResponseEntity.ok(
+            authService.refresh(request)
+    );
+}
+@PostMapping("/logout")
+public ResponseEntity<Void> logout(
+        @Valid @RequestBody LogoutRequest request
+) {
+
+    authService.logout(
+            request.refreshToken()
+    );
+
+    return ResponseEntity.noContent().build();
 }
 }

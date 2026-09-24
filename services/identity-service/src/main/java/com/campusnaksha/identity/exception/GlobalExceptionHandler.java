@@ -124,4 +124,23 @@ public ResponseEntity<ApiError> handleUserNotFound(
             .status(HttpStatus.NOT_FOUND)
             .body(error);
 }
+@ExceptionHandler(InvalidRefreshTokenException.class)
+public ResponseEntity<ApiError> handleInvalidRefreshToken(
+        InvalidRefreshTokenException exception,
+        HttpServletRequest request
+) {
+
+    ApiError error = new ApiError(
+            Instant.now(),
+            HttpStatus.UNAUTHORIZED.value(),
+            "INVALID_REFRESH_TOKEN",
+            exception.getMessage(),
+            request.getRequestURI(),
+            Map.of()
+    );
+
+    return ResponseEntity
+            .status(HttpStatus.UNAUTHORIZED)
+            .body(error);
+}
 }
