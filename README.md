@@ -137,6 +137,56 @@ campus-naksha/
 
 ## Project Status
 
-Phase 1:
+## Current Implementation Status
 
-Architecture and domain design.
+### Implemented
+
+#### Identity Service
+
+- Student registration
+- BCrypt password hashing
+- Login
+- JWT access tokens
+- Role-based authorization
+- Refresh token rotation
+- Refresh token revocation
+- Logout
+- Account enabled/disabled validation
+
+#### Incident Service
+
+- Incident creation
+- Incident retrieval
+- Status filtering
+- Category filtering
+- Campus map data
+- Incident status transitions
+- Status history
+- Priority management
+- JWT-based reporter identity
+- Admin-only status and priority updates
+- Optimistic locking
+- Validation
+- Standard API errors
+
+#### Infrastructure
+
+- PostgreSQL
+- Flyway
+- Eureka Service Registry
+- API Gateway
+- Redis infrastructure
+- RabbitMQ infrastructure
+
+### Planned
+
+- Emergency Service
+- Guard management
+- Redis GEO guard discovery
+- SOS assignment
+- Parking Service
+- Parking simulation
+- Notification Service
+- RabbitMQ event integration
+- WebSocket/STOMP
+- Next.js frontend

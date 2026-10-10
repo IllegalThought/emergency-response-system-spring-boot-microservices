@@ -100,19 +100,41 @@ public class RefreshTokenService {
         refreshTokenRepository.save(refreshToken);
     }
 
-    @Transactional
-    public IssuedRefreshToken rotate(String rawToken) {
+   @Transactional
+public IssuedRefreshToken rotate(
+        String rawToken
+) {
 
-        RefreshToken existingToken = validate(rawToken);
-
-        User user = existingToken.getUser();
-
-        existingToken.revoke(Instant.now());
-
-        refreshTokenRepository.save(existingToken);
-
-        return create(user);
+    if (rawToken == null || rawToken.isBlank()) {
+        throw new InvalidRefreshTokenException();
     }
+
+    String tokenHash = hash(rawToken);
+
+    RefreshToken existingToken =
+            refreshTokenRepository
+                    .findByTokenHashForUpdate(tokenHash)
+                    .orElseThrow(
+                            InvalidRefreshTokenException::new
+                    );
+
+    if (existingToken.isRevoked()
+            || existingToken.isExpired()
+            || !existingToken.getUser().isEnabled()) {
+
+        throw new InvalidRefreshTokenException();
+    }
+
+    User user = existingToken.getUser();
+
+    existingToken.revoke(Instant.now());
+
+    refreshTokenRepository.saveAndFlush(
+            existingToken
+    );
+
+    return create(user);
+}
 
     private String generateRandomToken() {
 

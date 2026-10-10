@@ -29,10 +29,11 @@ com.campusnaksha.incident
 
 Packages:
 
-- com.campusnaksha.incident.issue
-- com.campusnaksha.incident.issue.dto
-- com.campusnaksha.incident.history
-- com.campusnaksha.incident.event
+- com.campusnaksha.incident.controller
+- com.campusnaksha.incident.dto
+- com.campusnaksha.incident.entity
+- com.campusnaksha.incident.repository
+- com.campusnaksha.incident.service
 - com.campusnaksha.incident.config
 - com.campusnaksha.incident.exception
 

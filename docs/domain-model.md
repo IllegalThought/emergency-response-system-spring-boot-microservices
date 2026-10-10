@@ -48,19 +48,7 @@ Fields:
 
 # Incident Domain
 
-## IssueStatusHistory
-
-Fields:
-
-- id : UUID
-- issueId : UUID
-- previousStatus : IssueStatus
-- newStatus : IssueStatus
-- changedByUserId : UUID
-- changedAt : Instant
-- note : String
-
-## CampusIssue
+## Incident
 
 Fields:
 
@@ -68,18 +56,30 @@ Fields:
 - reportedByUserId : UUID
 - title : String
 - description : String
-- category : IssueCategory
-- status : IssueStatus
-- priority : IssuePriority
+- category : IncidentCategory
+- status : IncidentStatus
+- priority : IncidentPriority
 - latitude : BigDecimal
 - longitude : BigDecimal
 - locationName : String
 - createdAt : Instant
 - updatedAt : Instant
 - resolvedAt : Instant
+- version : Long
 
+## IncidentStatusHistory
 
-## IssueCategory
+Fields:
+
+- id : UUID
+- incidentId : UUID
+- previousStatus : IncidentStatus
+- newStatus : IncidentStatus
+- changedByUserId : UUID
+- changedAt : Instant
+- note : String
+
+## IncidentCategory
 
 Values:
 
@@ -92,8 +92,7 @@ Values:
 - LIGHTING
 - OTHER
 
-
-## IssueStatus
+## IncidentStatus
 
 Values:
 
@@ -103,8 +102,7 @@ Values:
 - RESOLVED
 - REJECTED
 
-
-## IssuePriority
+## IncidentPriority
 
 Values:
 
