@@ -8,23 +8,65 @@ import jakarta.validation.constraints.Size;
 public record RegisterRequest(
 
         @NotBlank(message = "Name is required")
-        @Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
+        @Size(
+                min = 2,
+                max = 100,
+                message = "Name must be between 2 and 100 characters"
+        )
         String name,
 
         @NotBlank(message = "Email is required")
         @Email(message = "Email must be valid")
-        @Size(max = 150, message = "Email must not exceed 150 characters")
+        @Size(
+                max = 150,
+                message = "Email must not exceed 150 characters"
+        )
         String email,
 
         @NotBlank(message = "Password is required")
-        @Size(min = 8, max = 100, message = "Password must be between 8 and 100 characters")
+        @Size(
+                min = 8,
+                max = 100,
+                message = "Password must be between 8 and 100 characters"
+        )
         @Pattern(
                 regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$",
                 message = "Password must contain uppercase, lowercase and number"
         )
         String password,
 
-        @Size(max = 20, message = "Phone must not exceed 20 characters")
+        @Size(
+                max = 20,
+                message = "Phone must not exceed 20 characters"
+        )
         String phone
+
 ) {
+
+    public RegisterRequest {
+
+        name = normalize(name);
+        email = normalize(email);
+        phone = normalizeOptional(phone);
+    }
+
+    private static String normalize(String value) {
+
+        return value == null
+                ? null
+                : value.trim();
+    }
+
+    private static String normalizeOptional(String value) {
+
+        if (value == null) {
+            return null;
+        }
+
+        String trimmed = value.trim();
+
+        return trimmed.isBlank()
+                ? null
+                : trimmed;
+    }
 }

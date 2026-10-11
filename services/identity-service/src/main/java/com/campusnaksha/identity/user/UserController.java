@@ -31,9 +31,12 @@ public class UserController {
         UUID userId =
                 UUID.fromString(jwt.getSubject());
 
-        User user = userRepository
-                .findById(userId)
-                .orElseThrow(UserNotFoundException::new);
+        User user =
+                userRepository
+                        .findById(userId)
+                        .orElseThrow(
+                                UserNotFoundException::new
+                        );
 
         return new UserResponse(
                 user.getId(),

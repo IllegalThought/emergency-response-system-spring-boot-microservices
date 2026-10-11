@@ -4,8 +4,12 @@ import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -142,5 +146,78 @@ public ResponseEntity<ApiError> handleInvalidRefreshToken(
     return ResponseEntity
             .status(HttpStatus.UNAUTHORIZED)
             .body(error);
+}
+
+private static final Logger log =
+        LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+@ExceptionHandler(HttpMessageNotReadableException.class)
+public ResponseEntity<ApiError> handleUnreadableRequest(
+        HttpMessageNotReadableException exception,
+        HttpServletRequest request
+) {
+
+    return ResponseEntity
+            .badRequest()
+            .body(
+                    new ApiError(
+                            Instant.now(),
+                            400,
+                            "INVALID_REQUEST",
+                            "Request body is malformed or contains an invalid value.",
+                            request.getRequestURI(),
+                            Map.of()
+                    )
+            );
+}
+@ExceptionHandler(DataIntegrityViolationException.class)
+public ResponseEntity<ApiError> handleDataIntegrity(
+        DataIntegrityViolationException exception,
+        HttpServletRequest request
+) {
+
+    log.warn(
+            "Database integrity violation on {}",
+            request.getRequestURI(),
+            exception
+    );
+
+    return ResponseEntity
+            .status(HttpStatus.CONFLICT)
+            .body(
+                    new ApiError(
+                            Instant.now(),
+                            409,
+                            "DATA_INTEGRITY_VIOLATION",
+                            "The request conflicts with existing data or database constraints.",
+                            request.getRequestURI(),
+                            Map.of()
+                    )
+            );
+}
+@ExceptionHandler(Exception.class)
+public ResponseEntity<ApiError> handleUnexpected(
+        Exception exception,
+        HttpServletRequest request
+) {
+
+    log.error(
+            "Unhandled exception on {}",
+            request.getRequestURI(),
+            exception
+    );
+
+    return ResponseEntity
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(
+                    new ApiError(
+                            Instant.now(),
+                            500,
+                            "INTERNAL_SERVER_ERROR",
+                            "An unexpected server error occurred.",
+                            request.getRequestURI(),
+                            Map.of()
+                    )
+            );
 }
 }

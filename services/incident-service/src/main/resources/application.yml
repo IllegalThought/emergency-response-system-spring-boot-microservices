@@ -1,0 +1,48 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: incident-service
+
+  datasource:
+    url: ${INCIDENT_DB_URL:jdbc:postgresql://localhost:5433/incident_db}
+    username: ${POSTGRES_USER:campus_admin}
+    password: ${POSTGRES_PASSWORD:campus_password}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+    open-in-view: false
+
+    properties:
+      "hibernate.jdbc.time_zone": UTC
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+security:
+  jwt:
+    issuer: campus-naksha-identity
+    secret: ${JWT_SECRET}
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+
+  endpoint:
+    health:
+      show-details: never

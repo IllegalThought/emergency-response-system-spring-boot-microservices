@@ -13,4 +13,11 @@ public record LoginRequest(
         String password
 
 ) {
+
+    public LoginRequest {
+
+        if (email != null) {
+            email = email.trim();
+        }
+    }
 }

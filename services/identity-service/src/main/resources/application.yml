@@ -6,9 +6,9 @@ spring:
     name: identity-service
 
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5433/identity_db}
-    username: ${DB_USERNAME:campus_admin}
-    password: ${DB_PASSWORD:campus_password}
+    url: ${IDENTITY_DB_URL:jdbc:postgresql://localhost:5433/identity_db}
+    username: ${POSTGRES_USER:campus_admin}
+    password: ${POSTGRES_PASSWORD:campus_password}
 
   jpa:
     hibernate:
@@ -30,8 +30,7 @@ security:
     issuer: campus-naksha-identity
     access-token-ttl: PT15M
     refresh-token-ttl: P7D
-    secret: ${JWT_SECRET:Y2FtcHVzLW5ha3NoYS1kZXYtc2VjcmV0LWtleS0zMmJ5dGVzIQ==}
-
+    secret: ${JWT_SECRET}
 # Eureka configuration
 eureka:
   client:
@@ -50,4 +49,4 @@ management:
 
   endpoint:
     health:
-      show-details: always
+      show-details: never

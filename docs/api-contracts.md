@@ -49,11 +49,13 @@ Request:
 
 Response:
 
-{
+
+  {
   "accessToken": "...",
   "refreshToken": "...",
   "tokenType": "Bearer",
-  "expiresIn": 3600
+  "expiresIn": 900,
+  "refreshExpiresIn": 604800
 }
 
 
@@ -63,10 +65,9 @@ GET /api/users/me
 
 # Incident APIs
 
+## Create Incident
 
-## Create Issue
-
-POST /api/issues
+POST /api/incidents
 
 Request:
 
@@ -79,60 +80,73 @@ Request:
   "locationName": "Library Road"
 }
 
-
 The backend determines:
 
-reportedByUserId
-
-status
-
-priority
-
-createdAt
-
+- reportedByUserId
+- status
+- priority
+- createdAt
 
 Defaults:
 
-status = REPORTED
-
-priority = MEDIUM
-
-
-## Get Issues
-
-GET /api/issues
+- status = REPORTED
+- priority = MEDIUM
 
 
-## Get Issue
+## Get Incidents
 
-GET /api/issues/{issueId}
+GET /api/incidents
 
 
-## Map Issues
+## Get Incident
 
-GET /api/issues/map
+GET /api/incidents/{incidentId}
+
+
+## Map Incidents
+
+GET /api/incidents/map
 
 
 ## Filter by Status
 
-GET /api/issues?status=IN_PROGRESS
+GET /api/incidents?status=IN_PROGRESS
 
 
 ## Filter by Category
 
-GET /api/issues?category=WATER
+GET /api/incidents?category=WATER
 
 
-## Update Issue Status
+## Update Incident Status
 
-PATCH /api/issues/{issueId}/status
+PATCH /api/incidents/{incidentId}/status
 
 ADMIN only.
 
 Request:
 
 {
-  "status": "ACKNOWLEDGED"
+  "status": "ACKNOWLEDGED",
+  "note": "Issue verified by maintenance team."
+}
+
+
+## Get Incident History
+
+GET /api/incidents/{incidentId}/history
+
+
+## Update Incident Priority
+
+PATCH /api/incidents/{incidentId}/priority
+
+ADMIN only.
+
+Request:
+
+{
+  "priority": "HIGH"
 }
 
 # Guard APIs
